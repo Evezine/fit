@@ -6,7 +6,8 @@ import plotly.express as px
 import datetime
 
 # MongoDB connection
-client = MongoClient("mongodb+srv://viswa:6374353499@clustername.mongodb.net/database?retryWrites=true&w=majority")
+client = MongoClient("mongodb+srv://viswa:6374353499@cluster0.mongodb.net/fitness_tracker?retryWrites=true&w=majority")
+
 db = client['fitness_tracker']
 
 # Collections
