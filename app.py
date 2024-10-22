@@ -5,9 +5,8 @@ import matplotlib.pyplot as plt
 import plotly.express as px
 import datetime
 
-# MongoDB connection
-client = MongoClient("mongodb+srv://viswa:6374353499@cluster0.mongodb.net/fitness_tracker?retryWrites=true&w=majority")
-
+# MongoDB connection to local server
+client = MongoClient("mongodb://localhost:27017/")
 db = client['fitness_tracker']
 
 # Collections
@@ -63,21 +62,6 @@ def display_leaderboard():
     st.subheader("Leaderboard")
     st.dataframe(leaderboard_df)
 
-# Reminders & Notifications
-def set_reminder(username, reminder_text, reminder_time):
-    users_collection.update_one(
-        {'username': username},
-        {'$push': {'reminders': {'text': reminder_text, 'time': reminder_time}}}
-    )
-    st.success("Reminder set successfully!")
-
-def display_reminders(username):
-    user = users_collection.find_one({'username': username})
-    if user and 'reminders' in user:
-        st.subheader("Reminders")
-        for reminder in user['reminders']:
-            st.write(f"{reminder['text']} at {reminder['time']}")
-
 # Streamlit UI
 st.title("Fitness Tracker")
 
@@ -86,7 +70,7 @@ if 'logged_in' not in st.session_state:
 
 if st.session_state['logged_in']:
     st.sidebar.write(f"Welcome, {st.session_state['username']}")
-    action = st.sidebar.selectbox("Choose an action", ["Add Workout", "View Progress", "Leaderboard", "Set Reminders", "View Reminders", "Logout"])
+    action = st.sidebar.selectbox("Choose an action", ["Add Workout", "View Progress", "Leaderboard", "Logout"])
 
     if action == "Add Workout":
         st.subheader("Add Workout")
@@ -121,16 +105,6 @@ if st.session_state['logged_in']:
 
     elif action == "Leaderboard":
         display_leaderboard()
-
-    elif action == "Set Reminders":
-        st.subheader("Set a Reminder")
-        reminder_text = st.text_input("Reminder Text")
-        reminder_time = st.time_input("Reminder Time")
-        if st.button("Set Reminder"):
-            set_reminder(st.session_state['username'], reminder_text, reminder_time)
-
-    elif action == "View Reminders":
-        display_reminders(st.session_state['username'])
 
     elif action == "Logout":
         st.session_state['logged_in'] = False
