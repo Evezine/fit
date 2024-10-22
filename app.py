@@ -4,6 +4,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import plotly.express as px
 import datetime
+from datetime import datetime as dt
 
 # MongoDB connection to local server
 client = MongoClient("mongodb://localhost:27017/")
@@ -32,9 +33,12 @@ def login(username, password):
 
 # Add workout data
 def add_workout(username, date, workout_type, duration, calories):
+    # Convert date to datetime.datetime
+    datetime_date = dt.combine(date, dt.min.time())
+    
     workouts_collection.insert_one({
         'username': username,
-        'date': date,
+        'date': datetime_date,  # Store as datetime.datetime
         'workout_type': workout_type,
         'duration': duration,
         'calories': calories
