@@ -4,3 +4,4 @@ dnspython
 pandas
 matplotlib
 plotly
+python-dotenv

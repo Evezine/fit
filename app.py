@@ -5,9 +5,11 @@ import matplotlib.pyplot as plt
 import plotly.express as px
 import datetime
 from datetime import datetime as dt
+from dotenv import load_dotenv
+import os
 
 # MongoDB connection to local server
-client = MongoClient("mongodb+srv://viswa:1234@cluster0.xpxqx.mongodb.net/?retryWrites=true&w=majority&tls=true")
+client = MongoClient(os.getenv("MONGO_URI"))
 db = client['fitness_tracker']
 
 # Collections
