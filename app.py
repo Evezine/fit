@@ -7,7 +7,7 @@ import datetime
 from datetime import datetime as dt
 
 # MongoDB connection to local server
-client = MongoClient("mongodb://localhost:27017/", serverSelectionTimeoutMS=50000)
+client = MongoClient("mongodb+srv://viswa:1234@cluster0.xpxqx.mongodb.net/?retryWrites=true&w=majority&tls=true")
 db = client['fitness_tracker']
 
 # Collections
